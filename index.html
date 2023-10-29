@@ -3,14 +3,12 @@
     <h3>
       Список
     </h3>
-    <textarea>
-      
-    </textarea>
+    <textarea id="source"></textarea>
     <button type="button" onClick="s.shuffle()">shuffle</button>
     <h5>
       Результат
     </h5>
-    <textarea id="result">
+    <textarea id="result" readonly>
     </textarea>
     <script>
       function shuffleList(a) {
@@ -22,10 +20,10 @@
       }
       const s = {
         shuffle: () => {
-          const textarea = document.querySelector('textarea');
+          const textarea = document.getElementById('source');
           const items = textarea.value.split('\n').map(x => x.trim());
           shuffleList(items);
-          document.getElementById('result').innerText = items.join('\n');
+          document.getElementById('result').value = items.join('\n');
         },
 
       };
