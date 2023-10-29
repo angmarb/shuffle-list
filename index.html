@@ -35,7 +35,7 @@
           return a;
       }
       function splitIntoGroups(strs, groupCount) {
-        const currentGroup = [];
+        let currentGroup = [];
         let groupNumber = 1;
         const result = [];
         for (const str of strs) {
@@ -58,7 +58,7 @@
           lastRow.removeAttribute('id');
         },
         recalculate: () => {
-          const sum = 0;
+          let sum = 0;
           const items = document.querySelectorAll('.item_value').forEach(i => {
             sum += +i.value;
           });
