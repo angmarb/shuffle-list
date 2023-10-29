@@ -4,12 +4,12 @@
       Players & rates
     </h3>
     <div id="rows">
-      <button class="button" onclick="s.add()">Add</button>
       <div id="sample_row" class="_row" style="display: none;">
         <input class="item_name" /> 
         <input class="item_value" type="number" oninput="s.recalculate()" />
         <button type="button" onclick="this.parentElement.remove()">Remove</button>
       </div>
+      <button class="button" onclick="s.add()">Add</button>
     </div>
     <label>
       Groups by:
@@ -34,17 +34,18 @@
           }
           return a;
       }
-      function splitIntoGroups(strs, groupCount) {
+      function splitIntoGroups(strs, maxInGroup) {
         let currentGroup = [];
         let groupNumber = 1;
         const result = [];
         for (const str of strs) {
           currentGroup.push(str);
-          if (currentGroup.length === groupCount) {
+          if (currentGroup.length === maxInGroup) {
              result.push({group: groupNumber++, items: currentGroup});
              currentGroup = [];
           }
         }
+        console.log({result});
         return result;
       }
       const s = {
@@ -59,10 +60,12 @@
         },
         recalculate: () => {
           let sum = 0;
-          const items = document.querySelectorAll('.item_value').forEach(i => {
+          let count = 0;
+          document.querySelectorAll('.item_value').forEach(i => {
             sum += +i.value;
+            count += 1;
           });
-          const avg = sum / items.length;
+          const avg = sum / count;
           document.getElementByid('avg_value').innerText = `${avg}`;
         },
         shuffle: () => {
@@ -75,6 +78,7 @@
               name, value
             });
           });
+          console.log({items});
           shuffleList(items);
           document.getElementById('result').value = splitIntoGroups(items.map(i => i.name), groupCount).map(g => `${g.group}\n${g.items.join('\n')}`).join('\n\n');
         },
