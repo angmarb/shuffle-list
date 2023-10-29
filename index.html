@@ -7,9 +7,9 @@
       <div id="sample_row" class="_row" style="display: none;">
         <input class="item_name" /> 
         <input class="item_value" type="number" oninput="s.recalculate()" />
-        <button type="button" onclick="this.parentElement.remove()">Remove</button>
+        <button type="button" onclick="this.parentElement.remove(); s.recalculate()">Remove</button>
       </div>
-      <button class="button" onclick="s.add()">Add</button>
+      <button class="button" onclick="s.add(); s.recalculate()">Add</button>
     </div>
     <label>
       Groups by:
