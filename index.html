@@ -4,8 +4,11 @@
       Players & rates
     </h3>
     <div id="rows">
-      <div class="row">
-        <input class="item_name" /> <input class="item_value" type="number" oninput="s.recalculate()" />
+      <button class="button" onclick="s.add()">Add</button>
+      <div id="sample_row" class="row" style="display: none;">
+        <input class="item_name" /> 
+        <input class="item_value" type="number" oninput="s.recalculate()" />
+        <button type="button" onclick="this.parent.remove()">Remove</button>
       </div>
     </div>
     <label>
@@ -45,13 +48,21 @@
         return result;
       }
       const s = {
+        add: () => {
+          const h = document.getElementById('sample_row').outerHTML;
+          document.getElementById('rows').insertAdjacentHTML('beforeend', h);
+          const rows = document.querySelectorAll('.row');
+          const lastRow = rows[rows.length - 1];
+          lastRow.display = 'block';
+          lastRow.removeAttribute('id');
+        },
         recalculate: () => {
           const sum = 0;
           const items = document.querySelectorAll('.item_value').map(i => {
             sum += +i.value;
           });
           const avg = sum / items.length;
-          document.getElementByid('avg_value').value = avg;
+          document.getElementByid('avg_value').innerText = `${avg}`;
         },
         shuffle: () => {
           const groupCount = +document.getElementById('group_count').value;
