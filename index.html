@@ -63,8 +63,8 @@
         recalculate: () => {
           let sum = 0;
           let count = 0;
-          document.querySelectorAll('.item_value').forEach(i => {
-            sum += +i.value;
+          document.querySelectorAll('.row').forEach(r => {
+            sum += +(r.querySelector('.item_value')).value;
             count += 1;
           });
           const avg = sum / count;
@@ -80,7 +80,6 @@
               name, value
             });
           });
-          console.log({items});
           shuffleList(items);
           document.getElementById('result').value = splitIntoGroups(items.map(i => i.name), groupCount).map(g => `Group ${g.group})\n${g.items.join('\n')}`).join('\n\n');
         },
