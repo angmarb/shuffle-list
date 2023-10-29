@@ -45,7 +45,9 @@
              currentGroup = [];
           }
         }
-        console.log({result});
+        if (currentGroup.length) {
+          result.push({group: groupNumber, items: currentGroup});
+        }
         return result;
       }
       const s = {
@@ -80,7 +82,7 @@
           });
           console.log({items});
           shuffleList(items);
-          document.getElementById('result').value = splitIntoGroups(items.map(i => i.name), groupCount).map(g => `${g.group}\n${g.items.join('\n')}`).join('\n\n');
+          document.getElementById('result').value = splitIntoGroups(items.map(i => i.name), groupCount).map(g => `Group ${g.group})\n${g.items.join('\n')}`).join('\n\n');
         },
 
       };
