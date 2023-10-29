@@ -34,6 +34,14 @@
           }
           return a;
       }
+      function testShuffleList(a, all) { const p = {};
+        for (let i = 0; i < all; ++i) {
+          const a1 = shuffleList(a.slice()); for (let j = 0; j < a1.length; ++j) {
+            p[`${j}-${a1[j]}`] = (p[`${j}-${a1[j]}`] || 0) + 1;
+          }
+        } const results = Object.entries(p).map(([k,v]) => `${k} = ${v / all}`); results.sort(); alert(results.join('\n'));
+      }
+      // testShuffleList(['a','b','c','d','e','f','g','h'], 100 * 1000);
       function splitIntoGroups(strs, maxInGroup) {
         let currentGroup = [];
         let groupNumber = 1;
