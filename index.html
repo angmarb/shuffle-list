@@ -59,7 +59,7 @@
         },
         recalculate: () => {
           const sum = 0;
-          const items = document.querySelectorAll('.item_value').map(i => {
+          const items = document.querySelectorAll('.item_value').forEach(i => {
             sum += +i.value;
           });
           const avg = sum / items.length;
@@ -67,12 +67,13 @@
         },
         shuffle: () => {
           const groupCount = +document.getElementById('group_count').value;
-          const items = document.querySelectorAll('.row').map(r => {
+          const items = [];
+          document.querySelectorAll('.row').forEach(r => {
             const name = r.querySelector('.item_name').value;
             const value = r.querySelector('.item_value').value;
-            return {
+            items.push({
               name, value
-            };
+            });
           });
           shuffleList(items);
           document.getElementById('result').value = splitIntoGroups(items.map(i => i.name), groupCount).map(g => `${g.group}\n${g.items.join('\n')}`).join('\n\n');
