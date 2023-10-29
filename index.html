@@ -1,12 +1,25 @@
 <html>
   <body>
     <h3>
-      Список
+      Players & rates
     </h3>
-    <textarea id="source"></textarea>
+    <div id="rows">
+      <div class="row">
+        <input class="item_name" /> <input class="item_value" type="number" oninput="s.recalculate()" />
+      </div>
+    </div>
+    <label>
+      Groups by:
+      <input type="number" value="2" id="group_count" />
+    </label>
+    <div>
+      <label>
+        Average value <span id="avg_value"></span>
+      </label>
+    </div>
     <button type="button" onClick="s.shuffle()">shuffle</button>
     <h5>
-      Результат
+      Result
     </h5>
     <textarea id="result">
     </textarea>
@@ -18,12 +31,39 @@
           }
           return a;
       }
+      function splitIntoGroups(strs, groupCount) {
+        const currentGroup = [];
+        let groupNumber = 1;
+        const result = [];
+        for (const str of strs) {
+          currentGroup.push(str);
+          if (currentGroup.length === groupCount) {
+             result.push({group: groupNumber++, items: currentGroup});
+             currentGroup = [];
+          }
+        }
+        return result;
+      }
       const s = {
+        recalculate: () => {
+          const sum = 0;
+          const items = document.querySelectorAll('.item_value').map(i => {
+            sum += +i.value;
+          });
+          const avg = sum / items.length;
+          document.getElementByid('avg_value').value = avg;
+        },
         shuffle: () => {
-          const textarea = document.getElementById('source');
-          const items = textarea.value.split('\n').map(x => x.trim());
+          const groupCount = +document.getElementById('group_count').value;
+          const items = document.querySelectorAll('.row').map(r => {
+            const name = r.querySelector('.item_name').value;
+            const value = r.querySelector('.item_value').value;
+            return {
+              name, value
+            };
+          });
           shuffleList(items);
-          document.getElementById('result').value = items.join('\n');
+          document.getElementById('result').value = splitIntoGroups(items.map(i => i.name), groupCount).map(g => `${g.group}\n${g.items.join('\n')}`).join('\n\n');
         },
 
       };
